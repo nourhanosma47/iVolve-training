@@ -44,7 +44,7 @@ Make sure Maven is installed on your system.
 ![package Screenshot](screenshots/package.png)
 
 
-### 2.Clone the Repository:
+### 2. Run the Repository:
 ```bash 
          java -jar target/hello-ivolve-1.0-SNAPSHOT.jar
 
