@@ -59,7 +59,7 @@ This lab demonstrates how to run a Java Spring Boot application inside a Docker 
     docker rm container1
 
 ```
-![Stop and Remove Screenshot](screenshots/Stop and Remove.png)
+![StopandRemoveScreenshot](screenshots/StopandRemove.png)
 
 
 
