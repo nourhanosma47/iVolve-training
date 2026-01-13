@@ -37,8 +37,8 @@ vim Dockerfile
 ```bash
 docker build -t lab4 .
 ```
-[build](screenshots/build.png)
-[dockerimage](screenshots/dockerimage.png)
+![build](screenshots/build.png)
+![dockerimage](screenshots/dockerimage.png)
 
 
 
