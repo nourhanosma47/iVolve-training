@@ -42,10 +42,9 @@ docker build -t app-app .
 ![build](screenshots/build.png)
 
 ### 4. step4 (firstmethod:(development, us-east) as variables in the command when run docker container)
-
 ```bash
 docker run -d -p 8081:8080 -e APP_MODE=development -e APP_REGION=us-east --name container2 app-app
-``
+```
 ![firstmethod](screenshots/firstmethod.png)
 
 
