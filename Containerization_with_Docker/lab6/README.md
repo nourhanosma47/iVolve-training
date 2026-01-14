@@ -38,8 +38,8 @@ vim Dockerfile
 ### 3. build docker image
 ``bash
 docker build -t app-app .
-```
-
+``
+![build](screenshots/build.png)
 
 ### 4. step4 (firstmethod:(development, us-east) as variables in the command when run docker container)
 
