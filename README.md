@@ -20,6 +20,8 @@ The monthly tasks completed include:
    - Lab 5: Multi-Stage Build for a Node.js App
    - Lab 6: Managing Docker Environment Variables Across Build and Runtime
    - Lab 7: Docker Volume and Bind Mount with Nginx
+   - Lab 8: Custom Docker Network for Microservices
+   - Lab 9: Containerized Node.js and MySQL Stack Using Docker Compose  
 
 
 ## Repository Structure
