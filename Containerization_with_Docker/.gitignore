@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+
+# Docker
+*.log
+
+# OS / Editor
+.DS_Store
+*.swp
+
+# Screenshots temp
+screenshots/*.tmp
+
