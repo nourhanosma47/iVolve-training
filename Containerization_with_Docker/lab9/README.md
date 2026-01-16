@@ -32,7 +32,7 @@ docker ps
 ```bash
 curl http://localhost:3000
 ```
-![verify](screenshots/verify.png)
+![Verify](screenshots/Verify.png)
 
 
 - Health Check
@@ -46,7 +46,7 @@ curl http://localhost:3000/health
 ```bash
 curl http://localhost:3000/ready
 ```
-![readness](screenshots/readness.png)
+![Readness](screenshots/Readness.png)
 
 
 - Verify Logs
