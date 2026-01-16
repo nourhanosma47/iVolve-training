@@ -46,7 +46,7 @@ curl http://localhost:3000/health
 ```bash
 curl http://localhost:3000/ready
 ```
-![Readness](screenshots/Readness.png)
+![Readiness](screenshots/Readiness.png)
 
 
 - Verify Logs
