@@ -21,7 +21,16 @@ The monthly tasks completed include:
    - Lab 6: Managing Docker Environment Variables Across Build and Runtime
    - Lab 7: Docker Volume and Bind Mount with Nginx
    - Lab 8: Custom Docker Network for Microservices
-   - Lab 9: Containerized Node.js and MySQL Stack Using Docker Compose  
+   - Lab 9: Containerized Node.js and MySQL Stack Using Docker Compose
+
+
+3. **K8S for Container Orchestration**
+   - Lab 10: Node Isolation Using Taints in Kubernetes
+   - Lab 11: Namespace Management and Resource Quota Enforcement
+   - Lab 12: Managing Configuration and Sensitive Data with ConfigMaps and Secrets
+   - Lab 13: Persistent Storage Setup for Application Logging
+   - Lab 14: StatefulSet with Headless Service
+     
 
 
 ## Repository Structure
