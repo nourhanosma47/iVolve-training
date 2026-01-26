@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodejs
+  template:
+    metadata:
+      labels:
+        app: nodejs
+    spec:
+      containers:
+      - name: nodejs
+        image: nodejs-app:latest  # الصورة الجديدة على registry الداخلي
+        imagePullPolicy: IfNotPresent                   # دايمًا يشوف أحدث نسخة
+        ports:
+        - containerPort: 3000
+        envFrom:                                   # لو عندك ConfigMap/Secret
+        - configMapRef:
+            name: nodejs-config
+        - secretRef:
+            name: nodejs-secret
+        volumeMounts:
+        - name: nodejs-pv
+          mountPath: /app/data                     # نفس المسار اللي عايزة تستخدمه
+      tolerations:
+      - key: "node"
+        operator: "Equal"
+        value: "worker"
+        effect: "NoSchedule"
+      volumes:
+      - name: nodejs-pv
+        persistentVolumeClaim:
+          claimName: nodejs-pvc
+
