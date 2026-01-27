@@ -34,6 +34,8 @@ The monthly tasks completed include:
    - Lab 16: Kubernetes Init Container for Pre-Deployment Database Setup
    - Lab 17: Pod Resource Management with CPU and Memory Requests and Limits
    - Lab 18: Control Pod-to-Pod Traffic via Network Policy
+   - Lab 19: Node-Wide Pod Management with DaemonSet
+   - Lab 20: Securing Kubernetes with RBAC and Service Accounts
      
 
 
