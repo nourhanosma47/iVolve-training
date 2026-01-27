@@ -30,6 +30,10 @@ The monthly tasks completed include:
    - Lab 12: Managing Configuration and Sensitive Data with ConfigMaps and Secrets
    - Lab 13: Persistent Storage Setup for Application Logging
    - Lab 14: StatefulSet with Headless Service
+   - Lab 15: Node.js Application Deployment with ClusterIP service
+   - Lab 16: Kubernetes Init Container for Pre-Deployment Database Setup
+   - Lab 17: Pod Resource Management with CPU and Memory Requests and Limits
+   - Lab 18: Control Pod-to-Pod Traffic via Network Policy
      
 
 
