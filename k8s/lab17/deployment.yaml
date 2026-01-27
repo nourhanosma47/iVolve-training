@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs
+  template:
+    metadata:
+      labels:
+        app: nodejs
+    spec:
+      containers:
+      - name: nodejs
+        image: nourhanosama/nodejs-app:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DB_HOST
+          value: "mysql-headless"
+        - name: DB_USER
+          value: "ivolveuser"
+        - name: DB_PASSWORD
+          value: "ivolvepass"
+        - name: DB_NAME
+          value: "ivolve"
+        resources:
+          requests:
+            cpu: "1"      # 1 vCPU
+            memory: "1Gi" # 1GiB RAM
+          limits:
+            cpu: "2"      # 2 vCPU
+            memory: "2Gi" # 2GiB RAM
+
