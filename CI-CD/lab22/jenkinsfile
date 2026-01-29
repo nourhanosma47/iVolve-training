@@ -1,6 +1,9 @@
 pipeline {
     agent any
-
+    tools {
+        maven 'maven-3'
+        dockerTool 'Docker' // 🐳 نستخدم الاسم الذي حددتِه للأداة
+    }
     environment {
         // تأكدي من استبدال nourhanosama باسم حسابك الحقيقي
         DOCKER_HUB_USER = 'nourhanosama' 
