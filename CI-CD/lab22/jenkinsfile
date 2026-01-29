@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        // بيانات Docker Hub - تأكدي من استبدال اسم المستخدم
+        // 🚨 تأكدي من تغيير اسم المستخدم هنا لاسم حسابك في Docker Hub
         DOCKER_HUB_USER = 'your-docker-username' 
         IMAGE_NAME      = 'jenkins-app'
         IMAGE_TAG       = "${env.BUILD_NUMBER}"
@@ -12,35 +12,36 @@ pipeline {
     stages {
         stage('1. Clone Source Code') {
             steps {
-                git 'https://github.com/Ibrahim-Adel15/Jenkins_App.git'
+                // قمنا بتحديد الفرع 'main' هنا لتجنب الخطأ السابق
+                git branch: 'main', url: 'https://github.com/Ibrahim-Adel15/Jenkins_App.git'
             }
         }
 
         stage('2. Run Unit Test') {
             steps {
-                // تنفيذ الاختبارات باستخدام Maven بناءً على ملف pom.xml
+                echo 'Running Unit Tests... 🧪'
                 sh 'mvn test'
             }
         }
 
         stage('3. Build App') {
             steps {
-                // بناء التطبيق وتخطي الاختبارات لأننا نفذناها بالفعل
+                echo 'Building Application... 🏗️'
                 sh 'mvn clean package -DskipTests'
             }
         }
 
         stage('4. Build Docker image') {
             steps {
-                // بناء الصورة من الـ Dockerfile الموجود في المستودع
+                echo 'Building Docker Image... 🐳'
                 sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
 
         stage('5. Push image to Docker hub') {
             steps {
+                echo 'Pushing Image to Docker Hub... 🚀'
                 script {
-                    // تسجيل الدخول ورفع الصورة باستخدام الـ Credentials المخزنة
                     withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDS_ID}", passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh "echo ${PASS} | docker login -u ${USER} --password-stdin"
                         sh "docker push ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
@@ -51,36 +52,36 @@ pipeline {
 
         stage('6. Delete image locally') {
             steps {
-                // مسح الصورة من السيرفر لتوفير المساحة
+                echo 'Cleaning up local images... 🧹'
                 sh "docker rmi ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
 
         stage('7. Edit deployment.yaml') {
             steps {
-                // تحديث ملف الـ YAML بالـ Tag الجديد تلقائياً
+                echo 'Updating Deployment Manifest... 📝'
+                // تحديث الصورة والـ Tag داخل ملف الـ YAML
                 sh "sed -i 's|image: .*|image: ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}|g' deployment.yaml"
             }
         }
 
         stage('8. Deploy to k8s cluster') {
             steps {
-                // تطبيق التعديلات على Kubernetes
+                echo 'Deploying to Kubernetes... ⛵'
                 sh "kubectl apply -f deployment.yaml"
             }
         }
     }
 
-    // الإجراءات النهائية (Post Actions)
     post {
         always {
-            echo 'تم الانتهاء من تنفيذ الـ Pipeline.'
+            echo 'Pipeline finished execution.'
         }
         success {
-            echo 'تم النشر بنجاح! 🎉'
+            echo 'Application Deployed Successfully! 🎉'
         }
         failure {
-            echo 'فشل الـ Pipeline، يرجى مراجعة الـ Logs. ❌'
+            echo 'Pipeline Failed. Please check logs. ❌'
         }
     }
 }
