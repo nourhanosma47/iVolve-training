@@ -1,7 +1,8 @@
 pipeline {
-    agent any  // يشتغل على أي node / VM موجود فيه Maven وDocker
+    agent any  // يشغّل على أي node / VM، هنا على الـ VM نفسه
+
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-id') 
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-id') // الاسم اللي سجلتيه في Jenkins
         IMAGE_NAME = 'nourhanosama/jenkins-app'
         IMAGE_TAG = "v${env.BUILD_NUMBER}"
     }
