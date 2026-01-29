@@ -57,7 +57,7 @@ pipeline {
         stage('Update Deployment YAML') {
             steps {
                 echo 'Updating deployment.yaml with new image...'
-                sh "sed -i 's|image: .*|image: ${IMAGE_NAME}:${BUILD_NUMBER}|' ${DEPLOYMENT_FILE}"
+                sh "sed -i 's|image: .*|image: ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}|g' CI-CD/lab22/k8s/deployment.yaml"
             }
         }
 
