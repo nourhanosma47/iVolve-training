@@ -1,79 +1,86 @@
 pipeline {
-    agent any  // يشغّل على أي node / VM، هنا على الـ VM نفسه
+    agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-id') // الاسم اللي سجلتيه في Jenkins
-        IMAGE_NAME = 'nourhanosama/jenkins-app'
-        IMAGE_TAG = "v${env.BUILD_NUMBER}"
+        // بيانات Docker Hub - تأكدي من استبدال اسم المستخدم
+        DOCKER_HUB_USER = 'your-docker-username' 
+        IMAGE_NAME      = 'jenkins-app'
+        IMAGE_TAG       = "${env.BUILD_NUMBER}"
+        DOCKER_CREDS_ID = 'docker-hub-creds'
     }
 
     stages {
-
-        stage('Checkout') {
+        stage('1. Clone Source Code') {
             steps {
-                echo '🔹 Cloning repository...'
-                git branch: 'main',
-                    url: 'https://github.com/nourhanosma47/iVolve-training.git'
+                git 'https://github.com/Ibrahim-Adel15/Jenkins_App.git'
             }
         }
 
-        stage('Run Unit Tests') {
+        stage('2. Run Unit Test') {
             steps {
-                echo '🔹 Running Maven Unit Tests...'
-                sh 'mvn clean test'
+                // تنفيذ الاختبارات باستخدام Maven بناءً على ملف pom.xml
+                sh 'mvn test'
             }
         }
 
-        stage('Build Application') {
+        stage('3. Build App') {
             steps {
-                echo '🔹 Building Application...'
-                sh 'mvn clean package'
+                // بناء التطبيق وتخطي الاختبارات لأننا نفذناها بالفعل
+                sh 'mvn clean package -DskipTests'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('4. Build Docker image') {
             steps {
-                echo "🔹 Building Docker image: ${IMAGE_NAME}:${IMAGE_TAG}"
-                sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                // بناء الصورة من الـ Dockerfile الموجود في المستودع
+                sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
 
-        stage('Push Docker Image') {
+        stage('5. Push image to Docker hub') {
             steps {
-                echo '🔹 Pushing Docker image to Docker Hub...'
-                sh """
-                echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-                docker push ${IMAGE_NAME}:${IMAGE_TAG}
-                """
+                script {
+                    // تسجيل الدخول ورفع الصورة باستخدام الـ Credentials المخزنة
+                    withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDS_ID}", passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh "echo ${PASS} | docker login -u ${USER} --password-stdin"
+                        sh "docker push ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
+                    }
+                }
             }
         }
 
-        stage('Delete Local Docker Image') {
+        stage('6. Delete image locally') {
             steps {
-                echo '🔹 Deleting local Docker image...'
-                sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+                // مسح الصورة من السيرفر لتوفير المساحة
+                sh "docker rmi ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
 
-        stage('Update Deployment YAML & Deploy') {
+        stage('7. Edit deployment.yaml') {
             steps {
-                echo '🔹 Updating deployment.yaml with new image...'
-                sh "sed -i 's|image:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|' k8s/deployment.yaml"
-                echo '🔹 Deploying to Kubernetes cluster...'
-                sh "kubectl apply -f k8s/deployment.yaml"
+                // تحديث ملف الـ YAML بالـ Tag الجديد تلقائياً
+                sh "sed -i 's|image: .*|image: ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}|g' deployment.yaml"
+            }
+        }
+
+        stage('8. Deploy to k8s cluster') {
+            steps {
+                // تطبيق التعديلات على Kubernetes
+                sh "kubectl apply -f deployment.yaml"
             }
         }
     }
 
+    // الإجراءات النهائية (Post Actions)
     post {
         always {
-            echo '✅ Pipeline finished (always runs)'
+            echo 'تم الانتهاء من تنفيذ الـ Pipeline.'
         }
         success {
-            echo '🎉 Pipeline succeeded!'
+            echo 'تم النشر بنجاح! 🎉'
         }
         failure {
-            echo '❌ Pipeline failed!'
+            echo 'فشل الـ Pipeline، يرجى مراجعة الـ Logs. ❌'
         }
     }
 }
