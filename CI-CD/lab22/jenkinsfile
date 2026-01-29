@@ -1,9 +1,10 @@
 pipeline {
     agent any
 
-    // تعريف الأدوات التي يحتاجها جينكينز للعمل
+    // تعريف الأدوات التي سيقوم جينكينز بتجهيزها تلقائياً
     tools {
-        maven 'maven-3' // ⚠️ تأكدي أن هذا الاسم مطابق للاسم في Manage Jenkins -> Tools
+        maven 'maven-3'
+        dockerTool 'docker' // ⚠️ تأكدي أن هذا الاسم مطابق للاسم في Manage Jenkins -> Tools
     }
 
     environment {
@@ -17,36 +18,36 @@ pipeline {
     stages {
         stage('1. Clone Source Code') {
             steps {
-                echo 'Cloning from GitHub... 📥'
+                echo 'جاري سحب الكود من GitHub... 📥'
                 git branch: 'main', url: 'https://github.com/Ibrahim-Adel15/Jenkins_App.git'
             }
         }
 
         stage('2. Run Unit Test') {
             steps {
-                echo 'Running Unit Tests... 🧪'
-                // الآن سيعرف جينكينز معنى أمر mvn
+                echo 'جاري تشغيل الاختبارات... 🧪'
                 sh 'mvn test'
             }
         }
 
         stage('3. Build App') {
             steps {
-                echo 'Building Application... 🏗️'
+                echo 'جاري بناء التطبيق... 🏗️'
                 sh 'mvn clean package -DskipTests'
             }
         }
 
         stage('4. Build Docker image') {
             steps {
-                echo 'Building Docker Image... 🐳'
+                echo 'جاري بناء صورة Docker... 🐳'
+                // استخدام أداة Docker التي تم تعريفها في قسم tools
                 sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
 
         stage('5. Push image to Docker hub') {
             steps {
-                echo 'Pushing Image to Docker Hub... 🚀'
+                echo 'جاري رفع الصورة إلى Docker Hub... 🚀'
                 script {
                     withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDS_ID}", passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh "echo ${PASS} | docker login -u ${USER} --password-stdin"
@@ -58,21 +59,21 @@ pipeline {
 
         stage('6. Delete image locally') {
             steps {
-                echo 'Cleaning up local images... 🧹'
+                echo 'جاري مسح الصورة محلياً لتوفير المساحة... 🧹'
                 sh "docker rmi ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
 
         stage('7. Edit deployment.yaml') {
             steps {
-                echo 'Updating Deployment Manifest... 📝'
+                echo 'جاري تحديث ملف الـ Deployment... 📝'
                 sh "sed -i 's|image: .*|image: ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}|g' deployment.yaml"
             }
         }
 
         stage('8. Deploy to k8s cluster') {
             steps {
-                echo 'Deploying to Kubernetes... ⛵'
+                echo 'جاري النشر على Kubernetes... ⛵'
                 sh "kubectl apply -f deployment.yaml"
             }
         }
@@ -80,13 +81,13 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline finished execution.'
+            echo 'انتهى تنفيذ الـ Pipeline.'
         }
         success {
-            echo 'Application Deployed Successfully! 🎉'
+            echo 'تم النشر بنجاح! 🎉'
         }
         failure {
-            echo 'Pipeline Failed. Please check logs. ❌'
+            echo 'فشل الـ Pipeline، يرجى مراجعة السجلات. ❌'
         }
     }
 }
