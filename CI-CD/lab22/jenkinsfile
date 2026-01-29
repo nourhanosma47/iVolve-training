@@ -1,7 +1,7 @@
 pipeline {
-    agent any  // بدل docker
+    agent any  // يشتغل على أي node / VM موجود فيه Maven وDocker
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-id')
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-id') 
         IMAGE_NAME = 'nourhanosama/jenkins-app'
         IMAGE_TAG = "v${env.BUILD_NUMBER}"
     }
@@ -19,7 +19,7 @@ pipeline {
         stage('Run Unit Tests') {
             steps {
                 echo '🔹 Running Maven Unit Tests...'
-                sh 'mvn clean test'  // Maven لازم يكون متسطّب على الـ VM
+                sh 'mvn clean test'
             }
         }
 
