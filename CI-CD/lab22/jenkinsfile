@@ -1,13 +1,7 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9.2-eclipse-temurin-11'  // Maven + JDK
-            args '-v /var/run/docker.sock:/var/run/docker.sock'  // Docker inside Docker
-        }
-    }
-
+    agent any  // بدل docker
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-id')  // سجلّي Docker Hub credentials في Jenkins
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-id')
         IMAGE_NAME = 'nourhanosama/jenkins-app'
         IMAGE_TAG = "v${env.BUILD_NUMBER}"
     }
@@ -25,7 +19,7 @@ pipeline {
         stage('Run Unit Tests') {
             steps {
                 echo '🔹 Running Maven Unit Tests...'
-                sh 'mvn clean test'
+                sh 'mvn clean test'  // Maven لازم يكون متسطّب على الـ VM
             }
         }
 
