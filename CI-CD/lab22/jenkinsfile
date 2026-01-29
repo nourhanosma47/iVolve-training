@@ -4,7 +4,7 @@ pipeline {
     // تعريف الأدوات التي سيقوم جينكينز بتجهيزها تلقائياً
     tools {
         maven 'maven-3'
-        docker 'Docker' 
+        dockerTool 'Docker' 
     }
 
     environment {
