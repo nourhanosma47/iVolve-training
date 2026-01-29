@@ -1,0 +1,84 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS = 'dockerhub-cred'
+        IMAGE_NAME = 'nourhanosama/jenkins-app'
+        DEPLOYMENT_FILE = 'k8s/deployment.yaml'
+    }
+
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                echo 'Cloning source code...'
+                checkout scm
+            }
+        }
+
+        stage('Run Unit Tests') {
+            steps {
+                echo 'Running Maven Tests...'
+                sh 'mvn clean test'
+            }
+        }
+
+        stage('Build Application') {
+            steps {
+                echo 'Building Application JAR...'
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building Docker image...'
+                sh "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                echo 'Pushing image to DockerHub...'
+                withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CREDENTIALS}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                    sh "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
+                }
+            }
+        }
+
+        stage('Delete Local Image') {
+            steps {
+                echo 'Removing local Docker image...'
+                sh "docker rmi ${IMAGE_NAME}:${BUILD_NUMBER}"
+            }
+        }
+
+        stage('Update Deployment YAML') {
+            steps {
+                echo 'Updating deployment.yaml with new image...'
+                sh "sed -i 's|image: .*|image: ${IMAGE_NAME}:${BUILD_NUMBER}|' ${DEPLOYMENT_FILE}"
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                echo 'Deploying to Kubernetes cluster...'
+                sh "kubectl apply -f ${DEPLOYMENT_FILE}"
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished.'
+        }
+        success {
+            echo 'Pipeline completed successfully 🚀'
+        }
+        failure {
+            echo 'Pipeline failed ❌ Check logs.'
+        }
+    }
+}
+
