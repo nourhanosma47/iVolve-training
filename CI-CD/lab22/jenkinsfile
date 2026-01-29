@@ -1,12 +1,8 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'maven-3'
-        dockerTool 'Docker' 
-    }
-
     environment {
+        // تأكدي من استبدال nourhanosama باسم حسابك الحقيقي
         DOCKER_HUB_USER = 'nourhanosama' 
         IMAGE_NAME      = 'jenkins-app'
         IMAGE_TAG       = "${env.BUILD_NUMBER}"
@@ -37,65 +33,44 @@ pipeline {
 
         stage('4. Build Docker image') {
             steps {
-                script {
-                    // تعريف مسار Docker لضمان عمل الأمر داخل الحاوية
-                    def dockerHome = tool name: 'Docker', type: 'dockerTool'
-                    withEnv(["PATH+DOCKER=${dockerHome}/bin"]) {
-                        echo 'جاري بناء صورة Docker... 🐳'
-                        sh 'docker --version'
-                        sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
-                    }
-                }
+                echo 'جاري بناء صورة Docker... 🐳'
+                sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
 
         stage('5. Push image to Docker hub') {
             steps {
-                script {
-                    def dockerHome = tool name: 'Docker', type: 'dockerTool'
-                    withEnv(["PATH+DOCKER=${dockerHome}/bin"]) {
-                        echo 'جاري رفع الصورة إلى Docker Hub... 🚀'
-                        withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDS_ID}", passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                            sh "echo ${PASS} | docker login -u ${USER} --password-stdin"
-                            sh "docker push ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
-                        }
-                    }
+                echo 'جاري رفع الصورة إلى Docker Hub... 🚀'
+                withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDS_ID}", passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    sh "echo ${PASS} | docker login -u ${USER} --password-stdin"
+                    sh "docker push ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
                 }
             }
         }
 
         stage('6. Delete image locally') {
             steps {
-                script {
-                    def dockerHome = tool name: 'Docker', type: 'dockerTool'
-                    withEnv(["PATH+DOCKER=${dockerHome}/bin"]) {
-                        echo 'جاري تنظيف الصور المحلية... 🧹'
-                        sh "docker rmi ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
-                    }
-                }
+                echo 'جاري تنظيف الصور المحلية... 🧹'
+                sh "docker rmi ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
 
         stage('7. Edit deployment.yaml') {
             steps {
                 echo 'تحديث ملف الـ Deployment... 📝'
-                stage('7. Edit deployment.yaml') {
-            steps {
-                echo 'تحديث ملف الـ Deployment... 📝'
-                // تعديل المسار ليشمل الهيكل الكامل للمجلدات
+                // تم تعديل المسار بناءً على هيكل المجلدات لديكِ
                 sh "sed -i 's|image: .*|image: ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}|g' CI-CD/lab22/k8s/deployment.yaml"
-            }
-        }
             }
         }
 
         stage('8. Deploy to k8s cluster') {
             steps {
                 echo 'جاري النشر على Kubernetes... ⛵'
-                sh "kubectl apply -f deployment.yaml"
+                // تأكدي من أن kubectl متاح في البيئة ويشير للملف الصحيح
+                sh "kubectl apply -f CI-CD/lab22/k8s/deployment.yaml"
             }
         }
-    }
+    } // إغلاق الـ stages
 
     post {
         success { echo 'تم تنفيذ المهمة بنجاح! 🎉' }
