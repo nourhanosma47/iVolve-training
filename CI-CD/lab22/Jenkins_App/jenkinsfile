@@ -57,9 +57,16 @@ pipeline {
         stage('Update Deployment YAML') {
             steps {
                 echo 'Updating deployment.yaml with new image...'
-                sh "sed -i 's|image: .*|image: ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}|g' CI-CD/lab22/k8s/deployment.yaml"
-            }
+                sh "ls -R"
+                script {
+                    try {
+                        sh "sed -i 's|image: .*|image: ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}|g' CI-CD/lab22/k8s/deployment.yaml"
+                    } catch (Exception e) {
+                        echo "فشل التعديل، سنعرف السبب من نتيجة أمر ls أعلاه ☝️"
+                    }
+                }
         }
+    }
 
         stage('Deploy to Kubernetes') {
             steps {
