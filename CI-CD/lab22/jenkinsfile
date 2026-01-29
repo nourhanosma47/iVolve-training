@@ -2,14 +2,14 @@ pipeline {
     agent any
     tools {
         maven 'maven-3'
-        dockerTool 'Docker' // 🐳 نستخدم الاسم الذي حددتِه للأداة
+        dockerTool 'Docker'
     }
     environment {
-        // تأكدي من استبدال nourhanosama باسم حسابك الحقيقي
         DOCKER_HUB_USER = 'nourhanosama' 
         IMAGE_NAME      = 'jenkins-app'
         IMAGE_TAG       = "${env.BUILD_NUMBER}"
-        FULL_IMAGE = "${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
+        // تصحيح: استخدمنا DOCKER_HUB_USER بدلاً من DOCKER_USER
+        FULL_IMAGE      = "${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
         DOCKER_CREDS_ID = 'docker-hub-creds'
     }
 
@@ -38,7 +38,7 @@ pipeline {
         stage('4. Build Docker image') {
             steps {
                 echo 'جاري بناء صورة Docker... 🐳'
-                sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
+                sh "docker build -t ${FULL_IMAGE} ."
             }
         }
 
@@ -47,7 +47,7 @@ pipeline {
                 echo 'جاري رفع الصورة إلى Docker Hub... 🚀'
                 withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDS_ID}", passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "echo ${PASS} | docker login -u ${USER} --password-stdin"
-                    sh "docker push ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker push ${FULL_IMAGE}"
                 }
             }
         }
@@ -55,27 +55,26 @@ pipeline {
         stage('6. Delete image locally') {
             steps {
                 echo 'جاري تنظيف الصور المحلية... 🧹'
-                sh "docker rmi ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
+                sh "docker rmi ${FULL_IMAGE}"
             }
         }
 
-        stage('Edit deployment.yaml') {
+        stage('7. Edit deployment.yaml') {
             steps {
-                echo "Stage 6: Updating deployment.yaml with new image tag..."
-                dir('CI-CD/Lab 22'){
-                    sh "sed -i 's|image:.*|image: ${FULL_IMAGE}|g' deployment.yaml"
-                }
+                echo "تحديث ملف الـ Deployment... 📝"
+                // الحل الأضمن: البحث عن الملف وتعديله أينما كان ليتجاوز مشاكل المسارات
+                sh "find . -name 'deployment.yaml' -exec sed -i 's|image:.*|image: ${FULL_IMAGE}|g' {} +"
             }
         }
 
         stage('8. Deploy to k8s cluster') {
             steps {
                 echo 'جاري النشر على Kubernetes... ⛵'
-                // تأكدي من أن kubectl متاح في البيئة ويشير للملف الصحيح
-                sh "kubectl apply -f CI-CD/lab22/k8s/deployment.yaml"
+                // نستخدم find أيضاً للتأكد من الوصول للملف ونشره
+                sh "find . -name 'deployment.yaml' -exec kubectl apply -f {} \\;"
             }
         }
-    } // إغلاق الـ stages
+    }
 
     post {
         success { echo 'تم تنفيذ المهمة بنجاح! 🎉' }
