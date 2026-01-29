@@ -79,7 +79,13 @@ pipeline {
         stage('7. Edit deployment.yaml') {
             steps {
                 echo 'تحديث ملف الـ Deployment... 📝'
-                sh "sed -i 's|image: .*|image: ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}|g' k8s/deployment.yaml"
+                stage('7. Edit deployment.yaml') {
+            steps {
+                echo 'تحديث ملف الـ Deployment... 📝'
+                // تعديل المسار ليشمل الهيكل الكامل للمجلدات
+                sh "sed -i 's|image: .*|image: ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}|g' CI-CD/lab22/k8s/deployment.yaml"
+            }
+        }
             }
         }
 
