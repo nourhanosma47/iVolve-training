@@ -42,6 +42,7 @@ pipeline {
                     def dockerHome = tool name: 'Docker', type: 'dockerTool'
                     withEnv(["PATH+DOCKER=${dockerHome}/bin"]) {
                         echo 'جاري بناء صورة Docker... 🐳'
+                        sh 'docker --version'
                         sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
                     }
                 }
