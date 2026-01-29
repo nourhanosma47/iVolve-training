@@ -1,8 +1,13 @@
 pipeline {
     agent any
 
+    // تعريف الأدوات التي يحتاجها جينكينز للعمل
+    tools {
+        maven 'maven-3' // ⚠️ تأكدي أن هذا الاسم مطابق للاسم في Manage Jenkins -> Tools
+    }
+
     environment {
-        // 🚨 تأكدي من تغيير اسم المستخدم هنا لاسم حسابك في Docker Hub
+        // 🚨 استبدلي 'your-docker-username' باسم حسابك الحقيقي على Docker Hub
         DOCKER_HUB_USER = 'your-docker-username' 
         IMAGE_NAME      = 'jenkins-app'
         IMAGE_TAG       = "${env.BUILD_NUMBER}"
@@ -12,7 +17,7 @@ pipeline {
     stages {
         stage('1. Clone Source Code') {
             steps {
-                // قمنا بتحديد الفرع 'main' هنا لتجنب الخطأ السابق
+                echo 'Cloning from GitHub... 📥'
                 git branch: 'main', url: 'https://github.com/Ibrahim-Adel15/Jenkins_App.git'
             }
         }
@@ -20,6 +25,7 @@ pipeline {
         stage('2. Run Unit Test') {
             steps {
                 echo 'Running Unit Tests... 🧪'
+                // الآن سيعرف جينكينز معنى أمر mvn
                 sh 'mvn test'
             }
         }
@@ -60,7 +66,6 @@ pipeline {
         stage('7. Edit deployment.yaml') {
             steps {
                 echo 'Updating Deployment Manifest... 📝'
-                // تحديث الصورة والـ Tag داخل ملف الـ YAML
                 sh "sed -i 's|image: .*|image: ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}|g' deployment.yaml"
             }
         }
