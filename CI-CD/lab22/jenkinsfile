@@ -58,13 +58,11 @@ pipeline {
             }
         }
 
-        stage('7. Edit deployment.yaml') {
+        stage('Edit deployment.yaml') {
             steps {
-                echo 'تحديث ملف الـ Deployment... 📝'
-                // تم تعديل المسار بناءً على هيكل المجلدات لديكِ
-                script {
-                    sh "find . -name 'deployment.yaml'"
-                    sh "sed -i 's|image: .*|image: ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}|g' deployment.yaml"
+                echo "Stage 6: Updating deployment.yaml with new image tag..."
+                dir('CI-CD/Lab 22'){
+                    sh "sed -i 's|image:.*|image: ${FULL_IMAGE}|g' deployment.yaml"
                 }
             }
         }
