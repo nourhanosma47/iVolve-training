@@ -1,14 +1,12 @@
 pipeline {
     agent any
 
-    // تعريف الأدوات التي سيقوم جينكينز بتجهيزها تلقائياً
     tools {
         maven 'maven-3'
-        dockerTool 'Docker' 
+        dockerTool 'Docker' // ⚠️ تأكدي أن الاسم مطابق لما كتبتيه في Tools
     }
 
     environment {
-        // 🚨 استبدلي 'your-docker-username' باسم حسابك الحقيقي على Docker Hub
         DOCKER_HUB_USER = 'your-docker-username' 
         IMAGE_NAME      = 'jenkins-app'
         IMAGE_TAG       = "${env.BUILD_NUMBER}"
@@ -18,7 +16,7 @@ pipeline {
     stages {
         stage('1. Clone Source Code') {
             steps {
-                echo 'جاري سحب الكود من GitHub... 📥'
+                echo 'جاري سحب الكود... 📥'
                 git branch: 'main', url: 'https://github.com/Ibrahim-Adel15/Jenkins_App.git'
             }
         }
@@ -40,10 +38,8 @@ pipeline {
         stage('4. Build Docker image') {
             steps {
                 script {
-                    // سحب مسار أداة Docker التي عرفناها في البداية
+                    // تعريف مسار Docker لضمان عمل الأمر داخل الحاوية
                     def dockerHome = tool name: 'Docker', type: 'dockerTool'
-                    
-                    // إضافة مسار الأداة لبيئة العمل مؤقتاً
                     withEnv(["PATH+DOCKER=${dockerHome}/bin"]) {
                         echo 'جاري بناء صورة Docker... 🐳'
                         sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
@@ -72,24 +68,16 @@ pipeline {
                 script {
                     def dockerHome = tool name: 'Docker', type: 'dockerTool'
                     withEnv(["PATH+DOCKER=${dockerHome}/bin"]) {
-                        echo 'جاري مسح الصورة محلياً... 🧹'
+                        echo 'جاري تنظيف الصور المحلية... 🧹'
                         sh "docker rmi ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
                     }
                 }
             }
         }
-💡 لماذا قمنا بهذا التغيير؟
-
-        stage('6. Delete image locally') {
-            steps {
-                echo 'جاري مسح الصورة محلياً لتوفير المساحة... 🧹'
-                sh "docker rmi ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
-            }
-        }
 
         stage('7. Edit deployment.yaml') {
             steps {
-                echo 'جاري تحديث ملف الـ Deployment... 📝'
+                echo 'تحديث ملف الـ Deployment... 📝'
                 sh "sed -i 's|image: .*|image: ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}|g' deployment.yaml"
             }
         }
@@ -103,14 +91,7 @@ pipeline {
     }
 
     post {
-        always {
-            echo 'انتهى تنفيذ الـ Pipeline.'
-        }
-        success {
-            echo 'تم النشر بنجاح! 🎉'
-        }
-        failure {
-            echo 'فشل الـ Pipeline، يرجى مراجعة السجلات. ❌'
-        }
+        success { echo 'تم تنفيذ المهمة بنجاح! 🎉' }
+        failure { echo 'فشل الـ Pipeline، يرجى مراجعة الـ Logs. ❌' }
     }
 }
