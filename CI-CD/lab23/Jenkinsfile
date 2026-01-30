@@ -1,0 +1,60 @@
+// 1. استدعاء المكتبة بالاسم الذي حددتِه في إعدادات جينكينز
+@Library('my-shared-library') _
+
+pipeline {
+    agent any
+
+    environment {
+        // تعريف المتغيرات لتسهيل التعديل مستقبلاً
+        IMAGE_NAME = "nourhanosma47/my-app-image:${env.BUILD_ID}"
+        DOCKER_HUB_CREDS = "docker-hub-credentials-id" // تأكدي من الـ ID في جينكينز
+        DEPLOYMENT_FILE = "deployment.yaml"
+    }
+
+    stages {
+        stage('Unit Test 🧪') {
+            steps {
+                runUnitTest() 
+            }
+        }
+
+        stage('Build Artifact 🏗️') {
+            steps {
+                buildApp()
+            }
+        }
+
+        stage('Docker Build 🐳') {
+            steps {
+                // نمرر اسم الصورة كـ Parameter للدالة
+                buildImage(IMAGE_NAME)
+            }
+        }
+
+        stage('Security Scan 🔍') {
+            steps {
+                scanImage(IMAGE_NAME)
+            }
+        }
+
+        stage('Push to DockerHub 🚀') {
+            steps {
+                // نمرر اسم الصورة ومعرف بيانات الاعتماد
+                pushImage(IMAGE_NAME, DOCKER_HUB_CREDS)
+            }
+        }
+
+        stage('Cleanup 🧹') {
+            steps {
+                removeImage(IMAGE_NAME)
+            }
+        }
+
+        stage('Deploy to K8s ⛵') {
+            steps {
+                // نمرر اسم الصورة وملف الـ YAML
+                deployOnK8s(IMAGE_NAME, DEPLOYMENT_FILE)
+            }
+        }
+    }
+}
