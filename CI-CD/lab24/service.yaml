@@ -10,6 +10,5 @@ spec:
   ports:
     - protocol: TCP
       port: 8080      # المنفذ داخل الحاوية
-      targetPort: 8080
-      nodePort: 30001 # المنفذ الذي سنستخدمه في المتصفح
+      targetPort: 8080 
   type: NodePort
