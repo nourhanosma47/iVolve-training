@@ -1,4 +1,4 @@
-FROM maven:sapmachine 
+FROM maven:3.9.6-sapmachine-17 
 
 # Set working directory in container
 WORKDIR /app
