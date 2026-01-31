@@ -66,6 +66,7 @@ pipeline {
                     
                     echo "جاري النشر على Kubernetes ⛵"
                     sh "kubectl apply -f ${env.DEPLOYMENT_FILE} --insecure-skip-tls-verify "
+                    sh "kubectl apply -f CI-CD/lab23/service.yaml --insecure-skip-tls-verify"
                     
                     // استخدام اسم jenkins-app كما هو موجود في ملف الـ YAML الخاص بكِ
                     sh "kubectl rollout status deployment/jenkins-app --insecure-skip-tls-verify" 
