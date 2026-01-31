@@ -8,6 +8,7 @@ pipeline {
         K8S_CREDS_ID     = "kubeconfig-id" 
         
         // استخدام اسم الفرع ورقم البناء لتمييز الصورة
+        CURRENT_BRANCH   = "${env.BRANCH_NAME ?: 'main'}"
         IMAGE_NAME       = "nourhanosama/jenkins-app:${env.BRANCH_NAME}-${env.BUILD_ID}" 
         
         // تحديد مسارات ملفات Kubernetes (نسبةً لمجلد lab24)
@@ -62,11 +63,10 @@ pipeline {
                     // الانتقال لمجلد ملفات الـ k8s إذا كانت موجودة داخل lab24
                     dir('CI-CD/lab24') {
                         withKubeConfig([credentialsId: "${env.K8S_CREDS_ID}"]) { 
-                            echo "Deploying branch ${env.BRANCH_NAME} to Namespace: ${K8S_NAMESPACE} 🏗️"
-                            
-                            // تحديث اسم الصورة داخل ملف الـ deployment
-                            sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' ${env.DEPLOYMENT_FILE}"
-                            
+                            sh "kubectl create namespace ${CURRENT_BRANCH} --dry-run=client -o yaml | kubectl apply -f - --insecure-skip-tls-verify"
+            
+                            echo "Deploying to Namespace: ${CURRENT_BRANCH} 🏗️"
+                            sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' deployment.yaml"
                             // النشر في الـ Namespace المحدد
                             sh "kubectl apply -f ${env.DEPLOYMENT_FILE} -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
                             sh "kubectl apply -f ${env.SERVICE_FILE} -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
