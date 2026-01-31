@@ -64,8 +64,12 @@ pipeline {
         }
 
         stage('Deploy to K8s ⛵') {
-            steps {
-                deployOnK8s(IMAGE_NAME, DEPLOYMENT_FILE)
+    steps {
+        // نستخدم معرف الـ Credentials الخاص بـ Kubernetes (Kubeconfig)
+        withKubeConfig([credentialsId: 'kubeconfig-id']) { 
+            echo "جاري النشر على Kubernetes باستخدام الملف: CI-CD/lab23/deployment.yaml ⛵"
+            sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' CI-CD/lab23/deployment.yaml"
+            sh "kubectl apply -f CI-CD/lab23/deployment.yaml"
             }
         }
     }
