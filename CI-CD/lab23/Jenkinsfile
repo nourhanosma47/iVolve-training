@@ -8,8 +8,9 @@ pipeline {
     }
     environment {
         DOCKER_HUB_CREDS = "docker-hub-credentials-id"
-        IMAGE_NAME = "nourhanosama/my-app:${env.BUILD_ID}" 
-        DEPLOYMENT_FILE = "CI-CD/lab23/deployment.yaml"
+        K8S_CREDS_ID     = "kubeconfig-id" // تعريف الـ ID هنا لسهولة التعديل مستقبلاً 🔑
+        IMAGE_NAME       = "nourhanosama/my-app:${env.BUILD_ID}" 
+        DEPLOYMENT_FILE  = "CI-CD/lab23/deployment.yaml"
     }
 
     stages {
@@ -55,21 +56,28 @@ pipeline {
             }
         }
 
+        stage('Deploy to K8s ⛵') {
+            steps {
+                // استخدام الهوية التي أضفناها مسبقاً في Jenkins
+                withKubeConfig([credentialsId: "${env.K8S_CREDS_ID}"]) { 
+                    echo "جاري تحديث الصورة في ملف الـ YAML إلى: ${IMAGE_NAME} 🔄"
+                    
+                    // تحديث اسم الصورة داخل ملف الـ deployment قبل التنفيذ
+                    sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' ${env.DEPLOYMENT_FILE}"
+                    
+                    echo "جاري النشر على Kubernetes ⛵"
+                    sh "kubectl apply -f ${env.DEPLOYMENT_FILE}"
+                    
+                    // خطوة إضافية: التحقق من حالة النشر
+                    sh "kubectl rollout status deployment/my-app-deployment" 
+                }
+            }
+        }
+
         stage('Cleanup 🧹') {
             steps {
                 removeImage(IMAGE_NAME)
             }
         }
-
-        stage('Deploy to K8s ⛵') {
-            steps {
-                // تأكدي أن kubeconfig-id موجود فعلياً في Jenkins Credentials
-                withKubeConfig([credentialsId: 'kubeconfig-id']) { 
-                    echo "جاري النشر على Kubernetes باستخدام الملف: CI-CD/lab23/deployment.yaml ⛵"
-                    sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' CI-CD/lab23/deployment.yaml"
-                    sh "kubectl apply -f CI-CD/lab23/deployment.yaml"
-                }
-            }
-        }
-    } // إغلاق stages
-} // إغلاق pipeline
+    }
+}
