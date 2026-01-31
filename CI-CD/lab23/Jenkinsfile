@@ -3,7 +3,8 @@
 pipeline {
     agent any
     tools {
-        maven 'maven-3' 
+        maven 'maven-3'
+        dockertools 'Docker'
     }
     environment {
         // تم تحديث الـ ID هنا ليتطابق مع ما لديكِ في جينكينز
