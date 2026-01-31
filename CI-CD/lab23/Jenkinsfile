@@ -2,7 +2,9 @@
 
 pipeline {
     agent any
-
+    tools {
+        maven 'maven-3' 
+    }
     environment {
         // تم تحديث الـ ID هنا ليتطابق مع ما لديكِ في جينكينز
         DOCKER_HUB_CREDS = "docker-hub-credentials-id"
