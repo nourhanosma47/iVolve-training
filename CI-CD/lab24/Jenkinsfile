@@ -13,8 +13,8 @@ pipeline {
         IMAGE_NAME       = "nourhanosama/jenkins-app:${env.BRANCH_NAME}-${env.BUILD_ID}" 
         
         // مسارات ملفات Kubernetes (تأكدي أنها موجودة في مجلد k8s داخل الـ Repo)
-        DEPLOYMENT_FILE  = "k8s/deployment.yaml"
-        SERVICE_FILE     = "k8s/service.yaml"
+        DEPLOYMENT_FILE  = "deployment.yaml"
+        SERVICE_FILE     = "service.yaml"
         
         // الـ Namespace يتحدد تلقائياً (dev/stag/prod) بناءً على اسم الفرع الحالي
         K8S_NAMESPACE    = "${env.BRANCH_NAME}"
