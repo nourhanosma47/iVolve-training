@@ -24,7 +24,6 @@ pipeline {
             }
         }
 
-        // استخدام بلوك واحد لكل العمليات داخل مجلد المشروع
         stage('Project Operations') {
             steps {
                 dir('CI-CD/lab23') {
@@ -36,7 +35,11 @@ pipeline {
                             buildApp()
                         }
                         stage('Docker Build 🐳') {
-                            buildImage(IMAGE_NAME)
+                            // تسجيل الدخول باستخدام البيانات المعرفة في Jenkins
+                            withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDS, passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                                sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
+                                buildImage(IMAGE_NAME)
+                            }
                         }
                         stage('Security Scan 🔍') {
                             scanImage(IMAGE_NAME)
@@ -57,7 +60,6 @@ pipeline {
 
         stage('Deploy to K8s ⛵') {
             steps {
-                // نمرر مسار ملف الـ yaml بالكامل كما هو معرف في الـ environment
                 deployOnK8s(IMAGE_NAME, DEPLOYMENT_FILE)
             }
         }
