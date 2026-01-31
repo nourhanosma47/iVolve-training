@@ -7,15 +7,9 @@ pipeline {
         DOCKER_HUB_CREDS = "docker-hub-credentials-id" 
         K8S_CREDS_ID     = "kubeconfig-id" 
         
-        // استخدام اسم الفرع ورقم البناء لتمييز الصورة
-        CURRENT_BRANCH   = "${env.BRANCH_NAME ?: 'main'}"
+        // تمييز الصورة والـ Namespace بناءً على الفرع الحالي
         IMAGE_NAME       = "nourhanosama/jenkins-app:${env.BRANCH_NAME}-${env.BUILD_ID}" 
-        
-        // تحديد مسارات ملفات Kubernetes (نسبةً لمجلد lab24)
-        DEPLOYMENT_FILE  = "deployment.yaml"
-        SERVICE_FILE     = "service.yaml"
-        
-        K8S_NAMESPACE    = "${env.BRANCH_NAME}"
+        K8S_NAMESPACE    = "${env.BRANCH_NAME ?: 'main'}"
     }
 
     stages {
@@ -28,13 +22,11 @@ pipeline {
         stage('CI: Build & Test 🧪') {
             steps {
                 script {
-                    // الدخول للمجلد الذي يحتوي على pom.xml و Dockerfile
                     dir('CI-CD/lab24') { 
                         echo "جاري تشغيل الاختبارات وبناء التطبيق... 🧪"
                         runUnitTest()
                         buildApp()
                         
-                        // تسجيل الدخول قبل بناء الصورة لحل مشكلة 401 Unauthorized عند سحب الصور الأساسية
                         withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDS, passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
                             sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
                             
@@ -50,35 +42,34 @@ pipeline {
         stage('Push to Registry 🚀') {
             steps {
                 script {
-                    // الرفع للمستودع (بما أننا سجلنا الدخول في المرحلة السابقة، سنقوم بالرفع مباشرة)
                     echo "جاري رفع الصورة إلى Docker Hub... 🚀"
                     pushImage(IMAGE_NAME, DOCKER_HUB_CREDS)
                 }
             }
         }
 
-    stage('CD: Deploy to K8s ⛵') {
-    steps {
-        script {
-            dir('CI-CD/lab24') {
-                withKubeConfig([credentialsId: "${env.K8S_CREDS_ID}"]) { 
-                    // نستخدم المتغير CURRENT_BRANCH لضمان عدم وجود null
-                    def targetNamespace = env.CURRENT_BRANCH ?: "main"
-                    
-                    echo "Ensuring namespace '${targetNamespace}' exists..."
-                    sh "kubectl create namespace ${targetNamespace} --dry-run=client -o yaml | kubectl apply -f - --insecure-skip-tls-verify"
-                    
-                    echo "Deploying to Namespace: ${targetNamespace} 🏗️"
-                    sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' deployment.yaml"
-                    
-                    // تأكدي من استخدام targetNamespace هنا أيضاً
-                    sh "kubectl apply -f deployment.yaml -n ${targetNamespace} --insecure-skip-tls-verify"
-                    sh "kubectl apply -f service.yaml -n ${targetNamespace} --insecure-skip-tls-verify"
+        stage('CD: Deploy to K8s ⛵') {
+            steps {
+                script {
+                    dir('CI-CD/lab24') {
+                        withKubeConfig([credentialsId: "${env.K8S_CREDS_ID}"]) { 
+                            echo "Ensuring namespace '${K8S_NAMESPACE}' exists..."
+                            sh "kubectl create namespace ${K8S_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f - --insecure-skip-tls-verify"
+                            
+                            echo "Deploying to Namespace: ${K8S_NAMESPACE} 🏗️"
+                            sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' deployment.yaml"
+                            
+                            sh "kubectl apply -f deployment.yaml -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
+                            sh "kubectl apply -f service.yaml -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
+                            
+                            echo "Checking deployment status..."
+                            sh "kubectl rollout status deployment/jenkins-app -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
+                        }
+                    }
                 }
             }
         }
-    }
-}    
+
         stage('Cleanup 🧹') {
             steps {
                 echo "تنظيف الصور المحلية... 🧹"
