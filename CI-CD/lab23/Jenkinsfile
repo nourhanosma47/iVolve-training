@@ -7,7 +7,6 @@ pipeline {
         dockerTool 'Docker'
     }
     environment {
-        // تحديث اسم المستخدم هنا ليتطابق مع الحساب
         DOCKER_HUB_CREDS = "docker-hub-credentials-id"
         IMAGE_NAME = "nourhanosama/my-app:${env.BUILD_ID}" 
         DEPLOYMENT_FILE = "CI-CD/lab23/deployment.yaml"
@@ -42,7 +41,6 @@ pipeline {
                             }
                         }
                         stage('Security Scan 🔍') {
-                            // سنضع محاولة الفحص داخل try-catch حتى لا يتوقف الـ Pipeline إذا لم يكن Trivy مثبتاً
                             try {
                                 scanImage(IMAGE_NAME)
                             } catch (Exception e) {
@@ -64,13 +62,14 @@ pipeline {
         }
 
         stage('Deploy to K8s ⛵') {
-    steps {
-        // نستخدم معرف الـ Credentials الخاص بـ Kubernetes (Kubeconfig)
-        withKubeConfig([credentialsId: 'kubeconfig-id']) { 
-            echo "جاري النشر على Kubernetes باستخدام الملف: CI-CD/lab23/deployment.yaml ⛵"
-            sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' CI-CD/lab23/deployment.yaml"
-            sh "kubectl apply -f CI-CD/lab23/deployment.yaml"
+            steps {
+                // تأكدي أن kubeconfig-id موجود فعلياً في Jenkins Credentials
+                withKubeConfig([credentialsId: 'kubeconfig-id']) { 
+                    echo "جاري النشر على Kubernetes باستخدام الملف: CI-CD/lab23/deployment.yaml ⛵"
+                    sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' CI-CD/lab23/deployment.yaml"
+                    sh "kubectl apply -f CI-CD/lab23/deployment.yaml"
+                }
             }
         }
-    }
-}
+    } // إغلاق stages
+} // إغلاق pipeline
