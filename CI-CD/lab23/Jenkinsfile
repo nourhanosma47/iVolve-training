@@ -28,9 +28,11 @@ pipeline {
 
         stage('Unit Test 🧪') {
             steps {
-                runUnitTest()
+                dir('CI-CD/lab23') {
+                    runUnitTest()
+                }
             }
-        }
+      }
 
         stage('Build Artifact 🏗️') {
             steps {
