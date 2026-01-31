@@ -7,7 +7,6 @@ pipeline {
         dockerTool 'Docker'
     }
     environment {
-        // تم تحديث الـ ID هنا ليتطابق مع ما لديكِ في جينكينز
         DOCKER_HUB_CREDS = "docker-hub-credentials-id"
         IMAGE_NAME = "nourhanosma47/my-app:${env.BUILD_ID}"
         DEPLOYMENT_FILE = "CI-CD/lab23/deployment.yaml"
@@ -16,7 +15,6 @@ pipeline {
     stages {
         stage('Checkout 🛰️') {
             steps {
-                // إضافة Timeout لعملية سحب الكود لتجنب خطأ RPC failed
                 checkout([$class: 'GitSCM', 
                     branches: scm.branches,
                     userRemoteConfigs: scm.userRemoteConfigs,
@@ -26,35 +24,28 @@ pipeline {
             }
         }
 
-        stage('Unit Test 🧪') {
+        // استخدام بلوك واحد لكل العمليات داخل مجلد المشروع
+        stage('Project Operations') {
             steps {
                 dir('CI-CD/lab23') {
-                    runUnitTest()
+                    script {
+                        stage('Unit Test 🧪') {
+                            runUnitTest()
+                        }
+                        stage('Build Artifact 🏗️') {
+                            buildApp()
+                        }
+                        stage('Docker Build 🐳') {
+                            buildImage(IMAGE_NAME)
+                        }
+                        stage('Security Scan 🔍') {
+                            scanImage(IMAGE_NAME)
+                        }
+                        stage('Push to DockerHub 🚀') {
+                            pushImage(IMAGE_NAME, DOCKER_HUB_CREDS)
+                        }
+                    }
                 }
-            }
-      }
-
-        stage('Build Artifact 🏗️') {
-            steps {
-                buildApp()
-            }
-        }
-
-        stage('Docker Build 🐳') {
-            steps {
-                buildImage(IMAGE_NAME)
-            }
-        }
-
-        stage('Security Scan 🔍') {
-            steps {
-                scanImage(IMAGE_NAME)
-            }
-        }
-
-        stage('Push to DockerHub 🚀') {
-            steps {
-                pushImage(IMAGE_NAME, DOCKER_HUB_CREDS)
             }
         }
 
@@ -66,6 +57,7 @@ pipeline {
 
         stage('Deploy to K8s ⛵') {
             steps {
+                // نمرر مسار ملف الـ yaml بالكامل كما هو معرف في الـ environment
                 deployOnK8s(IMAGE_NAME, DEPLOYMENT_FILE)
             }
         }
