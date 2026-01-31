@@ -1,78 +1,81 @@
 @Library('my-shared-library') _
 
 pipeline {
-    // 1. تحديد الـ Slave (استبدلي 'your-slave-label' بالاسم الموجود في إعدادات Nodes)
-    agent { label 'your-slave-label' } 
+    // 1. استخدام الـ Slave الذي تأكدنا من اتصاله (slave-vm)
+    agent { label 'slave-vm' } 
 
-    tools {
-        maven 'maven-3'
-        dockerTool 'Docker'
-    }
-    
     environment {
-        DOCKER_HUB_CREDS = "docker-hub-credentials-id"
+        // تأكدي من أن هذه الـ IDs مطابقة لما هو موجود في Jenkins Credentials
+        DOCKER_HUB_CREDS = "docker-hub-credentials-id" 
         K8S_CREDS_ID     = "kubeconfig-id" 
         
-        // استخدام اسم الفرع في التاج لتمييز الصور (dev/stag/prod)
-        IMAGE_NAME       = "nourhanosama/my-app:${env.BRANCH_NAME}-${env.BUILD_ID}" 
+        // تمييز الصورة بناءً على الفرع ورقم البناء لضمان عدم التداخل
+        IMAGE_NAME       = "nourhanosama/jenkins-app:${env.BRANCH_NAME}-${env.BUILD_ID}" 
         
-        DEPLOYMENT_FILE  = "CI-CD/lab23/deployment.yaml"
-        SERVICE_FILE     = "CI-CD/lab23/service.yaml"
+        // مسارات ملفات Kubernetes (تأكدي أنها موجودة في مجلد k8s داخل الـ Repo)
+        DEPLOYMENT_FILE  = "k8s/deployment.yaml"
+        SERVICE_FILE     = "k8s/service.yaml"
         
-        // تحديد الـ Namespace تلقائياً بناءً على اسم الفرع
+        // الـ Namespace يتحدد تلقائياً (dev/stag/prod) بناءً على اسم الفرع الحالي
         K8S_NAMESPACE    = "${env.BRANCH_NAME}"
     }
 
     stages {
         stage('Checkout 🛰️') {
             steps {
-                // جلب الكود الخاص بالفرع الحالي تلقائياً
+                // جلب الكود الخاص بالفرع الحالي
                 checkout scm 
             }
         }
 
-        stage('Project Operations') {
+        stage('CI: Build & Test 🧪') {
             steps {
-                dir('CI-CD/lab23') {
-                    script {
-                        stage('Unit Test 🧪') {
-                            runUnitTest()
-                        }
-                        stage('Build Artifact 🏗️') {
-                            buildApp()
-                        }
-                        stage('Docker Build & Push 🐳') {
-                            withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDS, passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
-                                sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
-                                buildImage(IMAGE_NAME)
-                                pushImage(IMAGE_NAME, DOCKER_HUB_CREDS)
-                            }
-                        }
+                script {
+                    // استدعاء الدوال من مجلد vars في مكتبتك المشتركة
+                    runUnitTest()
+                    buildApp()
+                    
+                    // بناء وفحص الصورة قبل الرفع
+                    buildImage(IMAGE_NAME)
+                    scanImage(IMAGE_NAME)
+                }
+            }
+        }
+
+        stage('Push to Registry 🚀') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDS, passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                        sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
+                        pushImage(IMAGE_NAME, DOCKER_HUB_CREDS)
                     }
                 }
             }
         }
 
-        stage('Deploy to K8s ⛵') {
+        stage('CD: Deploy to K8s ⛵') {
             steps {
-                withKubeConfig([credentialsId: "${env.K8S_CREDS_ID}"]) { 
-                    echo "Deploying to Namespace: ${K8S_NAMESPACE} 🏗️"
-                    
-                    // تحديث اسم الصورة داخل ملف الـ deployment باستخدام sed
-                    sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' ${env.DEPLOYMENT_FILE}"
-                    
-                    // النشر في الـ Namespace المحدد (-n)
-                    sh "kubectl apply -f ${env.DEPLOYMENT_FILE} -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
-                    sh "kubectl apply -f ${env.SERVICE_FILE} -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
-                    
-                    // التأكد من نجاح العملية
-                    sh "kubectl rollout status deployment/jenkins-app -n ${K8S_NAMESPACE} --insecure-skip-tls-verify" 
+                script {
+                    withKubeConfig([credentialsId: "${env.K8S_CREDS_ID}"]) { 
+                        echo "Deploying branch ${env.BRANCH_NAME} to Namespace: ${K8S_NAMESPACE} 🏗️"
+                        
+                        // تحديث اسم الصورة داخل ملف الـ deployment
+                        sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' ${env.DEPLOYMENT_FILE}"
+                        
+                        // النشر في الـ Namespace المحدد (-n)
+                        sh "kubectl apply -f ${env.DEPLOYMENT_FILE} -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
+                        sh "kubectl apply -f ${env.SERVICE_FILE} -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
+                        
+                        // التأكد من أن الـ Deployment يعمل بنجاح
+                        sh "kubectl rollout status deployment/jenkins-app -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
+                    }
                 }
             }
         }
 
         stage('Cleanup 🧹') {
             steps {
+                // مسح الصورة محلياً من على الـ Slave لتوفير المساحة
                 removeImage(IMAGE_NAME)
             }
         }
