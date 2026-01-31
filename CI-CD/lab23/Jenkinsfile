@@ -65,10 +65,10 @@ pipeline {
                     sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' ${env.DEPLOYMENT_FILE}"
                     
                     echo "جاري النشر على Kubernetes ⛵"
-                    sh "kubectl apply -f ${env.DEPLOYMENT_FILE}"
+                    sh "kubectl apply -f ${env.DEPLOYMENT_FILE} --insecure-skip-tls-verify "
                     
                     // استخدام اسم jenkins-app كما هو موجود في ملف الـ YAML الخاص بكِ
-                    sh "kubectl rollout status deployment/jenkins-app" 
+                    sh "kubectl rollout status deployment/jenkins-app --insecure-skip-tls-verify" 
                 }
             }
         }
