@@ -32,12 +32,15 @@ pipeline {
             steps {
                 script {
                     // استدعاء الدوال من مجلد vars في مكتبتك المشتركة
-                    runUnitTest()
-                    buildApp()
+                    dir('CI-CD/lab24') { 
+                        echo "جاري تشغيل الاختبارات من داخل مجلد العمل... 🧪"
+                        runUnitTest()
+                        buildApp()
                     
                     // بناء وفحص الصورة قبل الرفع
                     buildImage(IMAGE_NAME)
                     scanImage(IMAGE_NAME)
+                    }
                 }
             }
         }
