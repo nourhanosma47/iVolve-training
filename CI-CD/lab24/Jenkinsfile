@@ -1,37 +1,46 @@
 @Library('my-shared-library') _
 
 pipeline {
-    agent { label 'slave-vm' } 
+    agent { label 'slave-vm' }
 
     environment {
-        DOCKER_HUB_CREDS = "docker-hub-credentials-id" 
-        K8S_CREDS_ID     = "kubeconfig-id" 
-        
-        // تمييز الصورة والـ Namespace بناءً على الفرع الحالي
-        IMAGE_NAME       = "nourhanosama/jenkins-app:${env.BRANCH_NAME}-${env.BUILD_ID}" 
-        K8S_NAMESPACE    = "${env.BRANCH_NAME ?: 'main'}"
+        DOCKER_HUB_CREDS = "docker-hub-credentials-id"
+        K8S_CREDS_ID     = "kubeconfig-id"
+
+        IMAGE_REPO      = "nourhanosama/jenkins-app"
+        IMAGE_TAG       = "${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+        IMAGE_NAME      = "${IMAGE_REPO}:${IMAGE_TAG}"
+
+        K8S_NAMESPACE   = "${env.BRANCH_NAME}"
     }
 
     stages {
+
         stage('Checkout 🛰️') {
             steps {
-                checkout scm 
+                checkout scm
             }
         }
 
         stage('CI: Build & Test 🧪') {
             steps {
                 script {
-                    dir('CI-CD/lab24') { 
-                        echo "جاري تشغيل الاختبارات وبناء التطبيق... 🧪"
+                    dir('CI-CD/lab24') {
+                        echo "Running Unit Tests & Building App 🧪"
                         runUnitTest()
                         buildApp()
-                        
-                        withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDS, passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+
+                        withCredentials([usernamePassword(
+                            credentialsId: DOCKER_HUB_CREDS,
+                            usernameVariable: 'DOCKER_USER',
+                            passwordVariable: 'DOCKER_PASS'
+                        )]) {
                             sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
-                            
-                            echo "جاري بناء صورة Docker... 🐳"
+
+                            echo "Building Docker Image 🐳"
                             buildImage(IMAGE_NAME)
+
+                            echo "Scanning Docker Image 🔍"
                             scanImage(IMAGE_NAME)
                         }
                     }
@@ -39,11 +48,11 @@ pipeline {
             }
         }
 
-        stage('Push to Registry 🚀') {
+        stage('Push to Docker Hub 🚀') {
             steps {
                 script {
-                    echo "جاري رفع الصورة إلى Docker Hub... 🚀"
-                    pushImage(IMAGE_NAME, DOCKER_HUB_CREDS)
+                    echo "Pushing Image to Docker Hub 🚀"
+                    pushImage(IMAGE_NAME)
                 }
             }
         }
@@ -52,18 +61,24 @@ pipeline {
             steps {
                 script {
                     dir('CI-CD/lab24') {
-                        withKubeConfig([credentialsId: "${env.K8S_CREDS_ID}"]) { 
-                            echo "Ensuring namespace '${K8S_NAMESPACE}' exists..."
-                            sh "kubectl create namespace ${K8S_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f - --insecure-skip-tls-verify"
-                            
-                            echo "Deploying to Namespace: ${K8S_NAMESPACE} 🏗️"
-                            sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' deployment.yaml"
-                            
-                            sh "kubectl apply -f deployment.yaml -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
-                            sh "kubectl apply -f service.yaml -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
-                            
-                            echo "Checking deployment status..."
-                            sh "kubectl rollout status deployment/jenkins-app -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
+                        withKubeConfig([credentialsId: K8S_CREDS_ID]) {
+
+                            echo "Ensuring Namespace '${K8S_NAMESPACE}' exists"
+                            sh """
+                            kubectl create namespace ${K8S_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
+                            """
+
+                            echo "Updating image in deployment.yaml 📝"
+                            sh """
+                            sed -i 's|IMAGE_PLACEHOLDER|${IMAGE_NAME}|g' deployment.yaml
+                            """
+
+                            echo "Deploying to ${K8S_NAMESPACE} 🚀"
+                            sh "kubectl apply -f deployment.yaml -n ${K8S_NAMESPACE}"
+                            sh "kubectl apply -f service.yaml -n ${K8S_NAMESPACE}"
+
+                            echo "Waiting for rollout to finish ⏳"
+                            sh "kubectl rollout status deployment/jenkins-app -n ${K8S_NAMESPACE}"
                         }
                     }
                 }
@@ -72,9 +87,23 @@ pipeline {
 
         stage('Cleanup 🧹') {
             steps {
-                echo "تنظيف الصور المحلية... 🧹"
-                removeImage(IMAGE_NAME)
+                script {
+                    echo "Removing local Docker image 🧹"
+                    removeImage(IMAGE_NAME)
+                }
             }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline finished for branch: ${env.BRANCH_NAME}"
+        }
+        success {
+            echo "Deployment succeeded 🎉"
+        }
+        failure {
+            echo "Pipeline failed ❌"
         }
     }
 }
