@@ -57,27 +57,28 @@ pipeline {
             }
         }
 
-        stage('CD: Deploy to K8s ⛵') {
-            steps {
-                script {
-                    // الانتقال لمجلد ملفات الـ k8s إذا كانت موجودة داخل lab24
-                    dir('CI-CD/lab24') {
-                        withKubeConfig([credentialsId: "${env.K8S_CREDS_ID}"]) { 
-                            sh "kubectl create namespace ${CURRENT_BRANCH} --dry-run=client -o yaml | kubectl apply -f - --insecure-skip-tls-verify"
-            
-                            echo "Deploying to Namespace: ${CURRENT_BRANCH} 🏗️"
-                            sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' deployment.yaml"
-                            // النشر في الـ Namespace المحدد
-                            sh "kubectl apply -f ${env.DEPLOYMENT_FILE} -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
-                            sh "kubectl apply -f ${env.SERVICE_FILE} -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
-                            
-                            sh "kubectl rollout status deployment/jenkins-app -n ${K8S_NAMESPACE} --insecure-skip-tls-verify"
-                        }
-                    }
+    stage('CD: Deploy to K8s ⛵') {
+    steps {
+        script {
+            dir('CI-CD/lab24') {
+                withKubeConfig([credentialsId: "${env.K8S_CREDS_ID}"]) { 
+                    // نستخدم المتغير CURRENT_BRANCH لضمان عدم وجود null
+                    def targetNamespace = env.CURRENT_BRANCH ?: "main"
+                    
+                    echo "Ensuring namespace '${targetNamespace}' exists..."
+                    sh "kubectl create namespace ${targetNamespace} --dry-run=client -o yaml | kubectl apply -f - --insecure-skip-tls-verify"
+                    
+                    echo "Deploying to Namespace: ${targetNamespace} 🏗️"
+                    sh "sed -i 's|image:.*|image: ${IMAGE_NAME}|g' deployment.yaml"
+                    
+                    // تأكدي من استخدام targetNamespace هنا أيضاً
+                    sh "kubectl apply -f deployment.yaml -n ${targetNamespace} --insecure-skip-tls-verify"
+                    sh "kubectl apply -f service.yaml -n ${targetNamespace} --insecure-skip-tls-verify"
                 }
             }
         }
-
+    }
+}    
         stage('Cleanup 🧹') {
             steps {
                 echo "تنظيف الصور المحلية... 🧹"
