@@ -1,0 +1,1106 @@
+Jan 31, 2026 7:19:23 PM hudson.remoting.Launcher createEngine
+INFO: Setting up agent: slave-vm
+Jan 31, 2026 7:19:23 PM hudson.remoting.Engine startEngine
+INFO: Using Remoting version: 3352.v17a_fb_4b_2773f
+Jan 31, 2026 7:19:23 PM org.jenkinsci.remoting.engine.WorkDirManager initializeWorkDir
+INFO: Using /home/nourhan/iVolve-training/CI-CD/lab24/jenkins-workspace/remoting as a remoting work directory
+Jan 31, 2026 7:19:25 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:19:25 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:19:25 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:19:25 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:19:25 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:19:25 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:19:25 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:19:25 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:19:26 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:19:26 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:19:26 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:19:26 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:19:36 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:19:36 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:19:36 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:19:36 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:19:36 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:19:36 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:19:36 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:19:36 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:19:37 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:19:37 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:19:37 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:19:37 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:19:47 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:19:47 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:19:47 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:19:47 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:19:47 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:19:47 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:19:47 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:19:47 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:19:47 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:19:47 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:19:47 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:19:47 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:19:57 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:19:57 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:19:57 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:19:57 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:19:57 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:19:57 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:19:57 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:19:57 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:19:57 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:19:57 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:19:58 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:19:58 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:20:08 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:20:08 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:20:08 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:20:08 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:20:08 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:20:08 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:20:08 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:20:08 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:20:08 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:20:08 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:20:08 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:20:08 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:20:18 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:20:18 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:20:18 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:20:18 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:20:18 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:20:18 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:20:18 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:20:18 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:20:18 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:20:18 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:20:18 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:20:18 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:20:28 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:20:28 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:20:28 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:20:28 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:20:28 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:20:28 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:20:28 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:20:28 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:20:28 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:20:28 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:20:28 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:20:28 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:20:38 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:20:38 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:20:38 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:20:38 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:20:38 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:20:38 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:20:38 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:20:38 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:20:38 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:20:38 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:20:38 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:20:38 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:20:48 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:20:48 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:20:48 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:20:48 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:20:48 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:20:48 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:20:48 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:20:48 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:20:49 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:20:49 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:20:49 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:20:49 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:20:59 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:20:59 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:20:59 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:20:59 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:20:59 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:20:59 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:20:59 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:20:59 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:20:59 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:20:59 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:20:59 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:20:59 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:21:09 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:21:09 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:21:09 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:21:09 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:21:09 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:21:09 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:21:09 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:21:09 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:21:09 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:21:09 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:21:09 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:21:09 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:21:19 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:21:19 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:21:19 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:21:19 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:21:19 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:21:19 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:21:19 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:21:19 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:21:20 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:21:20 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:21:20 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:21:20 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:21:30 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:21:30 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:21:30 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:21:30 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:21:30 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:21:30 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:21:30 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:21:30 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:21:30 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:21:30 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:21:30 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:21:30 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:21:40 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:21:40 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:21:40 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:21:40 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:21:40 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:21:40 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:21:40 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:21:40 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:21:40 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:21:40 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:21:40 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:21:40 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:21:50 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:21:50 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:21:50 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:21:50 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:21:50 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:21:50 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:21:51 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:21:51 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:21:51 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:21:51 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:21:51 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:21:51 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:22:01 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:22:01 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:22:01 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:22:01 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:22:01 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:22:01 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:22:01 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:22:01 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:22:01 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:22:01 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:22:01 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:22:01 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:22:11 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:22:11 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:22:11 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:22:11 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:22:11 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:22:11 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:22:11 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:22:11 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:22:11 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:22:11 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:22:11 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:22:11 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:22:21 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:22:21 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:22:21 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:22:21 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:22:21 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:22:21 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:22:21 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:22:21 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:22:21 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:22:21 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:22:21 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:22:21 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:22:31 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:22:31 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:22:31 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:22:31 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:22:31 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:22:31 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:22:31 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:22:31 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:22:32 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:22:32 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:22:32 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:22:32 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
+Jan 31, 2026 7:22:42 PM hudson.remoting.Launcher$CuiListener status
+INFO: Locating server among [http://192.168.142.131:8080/]
+Jan 31, 2026 7:22:42 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
+Jan 31, 2026 7:22:42 PM hudson.remoting.Launcher$CuiListener status
+INFO: Agent discovery successful
+  Agent address: 192.168.142.131
+  Agent port:    50000
+  Identity:      7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:22:42 PM hudson.remoting.Launcher$CuiListener status
+INFO: Handshaking
+Jan 31, 2026 7:22:42 PM hudson.remoting.Launcher$CuiListener status
+INFO: Connecting to 192.168.142.131:50000
+Jan 31, 2026 7:22:42 PM hudson.remoting.Launcher$CuiListener status
+INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
+Jan 31, 2026 7:22:42 PM hudson.remoting.Launcher$CuiListener status
+INFO: Trying protocol: JNLP4-connect
+Jan 31, 2026 7:22:42 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+INFO: Waiting for ProtocolStack to start.
+Jan 31, 2026 7:22:42 PM hudson.remoting.Launcher$CuiListener status
+INFO: Remote identity confirmed: 7b:49:cb:b1:58:35:bd:81:ce:80:2b:b3:65:b8:8e:4e
+Jan 31, 2026 7:22:42 PM org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer onRecv
+INFO: [JNLP4-connect connection to 192.168.142.131/192.168.142.131:50000] Local headers refused by remote: slave-vm is already connected to this controller. Rejecting this connection.
+Jan 31, 2026 7:22:42 PM hudson.remoting.Launcher$CuiListener status
+INFO: Protocol JNLP4-connect encountered an unexpected exception
+java.util.concurrent.ExecutionException: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.util.SettableFuture.get(SettableFuture.java:222)
+	at hudson.remoting.Engine.innerRun(Engine.java:1067)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+Caused by: org.jenkinsci.remoting.protocol.impl.ConnectionRefusalException: slave-vm is already connected to this controller. Rejecting this connection.
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.newAbortCause(ConnectionHeadersFilterLayer.java:396)
+	at org.jenkinsci.remoting.protocol.impl.ConnectionHeadersFilterLayer.onRecvClosed(ConnectionHeadersFilterLayer.java:451)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.FilterLayer.onRecvClosed(FilterLayer.java:289)
+	at org.jenkinsci.remoting.protocol.impl.SSLEngineFilterLayer.onRecvClosed(SSLEngineFilterLayer.java:167)
+	at org.jenkinsci.remoting.protocol.ProtocolStack$Ptr.onRecvClosed(ProtocolStack.java:826)
+	at org.jenkinsci.remoting.protocol.NetworkLayer.onRecvClosed(NetworkLayer.java:155)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer.access$700(BIONetworkLayer.java:50)
+	at org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader.run(BIONetworkLayer.java:256)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at hudson.remoting.Engine$1.lambda$newThread$0(Engine.java:312)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	Suppressed: java.nio.channels.ClosedChannelException
+		... 7 more
+
+Jan 31, 2026 7:22:42 PM hudson.remoting.Launcher$CuiListener status
+INFO: reconnect rejected, sleeping 10s: 
+java.lang.Exception: The server rejected the connection: None of the protocols were accepted
+	at hudson.remoting.Engine.onConnectionRejected(Engine.java:1155)
+	at hudson.remoting.Engine.innerRun(Engine.java:1093)
+	at hudson.remoting.Engine.runTcp(Engine.java:621)
+	at hudson.remoting.Engine.run(Engine.java:562)
+
