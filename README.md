@@ -36,7 +36,24 @@ The monthly tasks completed include:
    - Lab 18: Control Pod-to-Pod Traffic via Network Policy
    - Lab 19: Node-Wide Pod Management with DaemonSet
    - Lab 20: Securing Kubernetes with RBAC and Service Accounts
-     
+
+
+4. **Continues Integration / Continues Delivery**
+      - Lab 21: Role-based Authorization
+      - Lab 22: Jenkins Pipeline for Application Deployment
+      - Lab 23: CI/CD Pipeline Implementation with Jenkins Agents and Shared Libraries
+
+
+5. **GitOps Workflow with ArgoCD**
+    - Lab 24: GitOps workflow
+
+6.**Ansible Automation**
+   - Lab 25: Initial Ansible Configuration and Ad-Hoc Execution
+   - Lab 26: Automated Web Server Configuration Using Ansible Playbooks
+   - Lab 27: Structured Configuration Management with Ansible Roles
+   - Lab 28: Securing Sensitive Data with Ansible Vault
+   - Lab 29: Automated Host Discovery with Ansible Dynamic Inventory
+   
 
 
 ## Repository Structure
