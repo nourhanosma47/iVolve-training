@@ -3,8 +3,7 @@ pipeline {
     
     tools {
         maven 'maven-3'
-        // هنا بننادي الأداة اللي عرفناها في Jenkins Tools
-        dockerTool 'docker' 
+        // شلنا الـ dockerTool لأنه مش هنحتاجه خلاص مع Jib
     }
 
     stages {
@@ -14,31 +13,15 @@ pipeline {
             }
         }
 
-        stage('Build Maven') {
+        stage('Build & Push Image (using Jib)') {
             steps {
-                dir('argocd') {
-                    sh 'mvn clean package -DskipTests'
-                }
-            }
-        }
-
-        stage('Docker Build & Push') {
-            steps {
-                dir('argocd') {
+                // بننادي الـ credentials اللي فيها يوزر وباسورد Docker Hub
+                // تأكدي إن الاسم 'dockerhub-id' هو اللي إنتِ مستخدماه في Jenkins
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-id', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                     script {
-                        // الحركة دي بتجبر جينكينز يشوف مكان الدوكر اللي نزله
-                        def dockerBin = tool name: 'docker', type: 'dockerTool'
-                        withEnv(["PATH+DOCKER=${dockerBin}/bin"]) {
-                            
-                            // بناء الصورة
-                            sh "docker build -t nourhanosma47/jenkins-app:${BUILD_NUMBER} ."
-                            
-                            // تسجيل الدخول والرفع لـ Docker Hub
-                            withCredentials([usernamePassword(credentialsId: 'dockerhub-id', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                                sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin"
-                                sh "docker push nourhanosma47/jenkins-app:${BUILD_NUMBER}"
-                            }
-                        }
+                        // Jib هيبني الصورة ويرفعها في خطوة واحدة من غير Docker
+                        // استخدمنا ${BUILD_NUMBER} عشان الصورة تاخد رقم الـ build
+                        sh "mvn compile jib:build -Dimage=docker.io/nourhanosma47/jenkins-app:${BUILD_NUMBER}"
                     }
                 }
             }
