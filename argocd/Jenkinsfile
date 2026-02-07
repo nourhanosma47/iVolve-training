@@ -3,26 +3,32 @@ pipeline {
     
     tools {
         maven 'maven-3'
+        docker 'docker' 
     }
 
     stages {
         stage('Checkout') {
             steps {
+                // جينكينز بيعمل checkout للريبو كله في البداية
                 git branch: 'main', url: 'https://github.com/nourhanosma47/iVolve-training.git'
             }
         }
 
         stage('Build Maven') {
             steps {
+                // بما إن الـ pom.xml موجود جوه فولدر argocd
                 dir('argocd') {
                     sh 'mvn clean package -DskipTests'
                 }
             }
         }
-       stage('Docker Build & Push') {
+
+        stage('Docker Build & Push') {
             steps {
                 dir('argocd') {
+                    // بناء الصورة باستخدام رقم الـ Build الحالي
                     sh 'docker build -t nourhanosma47/jenkins-app:${BUILD_NUMBER} .'
+                    
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-id', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                         sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
                         sh 'docker push nourhanosma47/jenkins-app:${BUILD_NUMBER}'
@@ -33,22 +39,25 @@ pipeline {
         
         stage('Update Manifest') {
             steps {
-                // هنا بنعدل ملف الـ deployment اللي في نفس الفولدر
                 dir('argocd') {
                     withCredentials([usernamePassword(credentialsId: 'github-token-secret', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh '''
+                        sh """
+                            # تعديل رقم الـ Image في ملف الـ deployment
                             sed -i "s|image:.*|image: nourhanosma47/jenkins-app:${BUILD_NUMBER}|g" deployment.yaml
+                            
+                            # إعدادات الجيت عشان يقدر يعمل Commit
                             git config user.email "nourhan@example.com"
                             git config user.name "Nourhan"
+                            
                             git add deployment.yaml
                             git commit -m "Update image to version ${BUILD_NUMBER}"
+                            
+                            # الرفع لـ GitHub
                             git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/nourhanosma47/iVolve-training.git main
-                        '''
+                        """
                     }
                 }
             }
         }
     }
 }
- 
-        
