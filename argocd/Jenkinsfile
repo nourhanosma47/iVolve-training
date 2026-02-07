@@ -43,7 +43,7 @@ pipeline {
                     git add argocd/deployment.yaml
                     # السطر اللي جاي بيخليه يعمل commit فقط لو فيه تغييرات فعلاً، ولو مفيش بيكمل عادي من غير ما يوقع الـ build
                     git diff-index --quiet HEAD || git commit -m 'Update image tag to ${env.BUILD_NUMBER}'
-                    git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/nourhanosama47/iVolve-training.git HEAD:main
+                    git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/nourhanosma47/iVolve-training.git HEAD:main
                 """
                     }
                 }    
