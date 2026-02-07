@@ -34,7 +34,7 @@ pipeline {
                 
                 // 1. تغيير الـ Image Tag في ملف الـ deployment.yaml
                 // بنستخدم sed عشان ندور على اسم الصورة ونحدث الـ Tag للرقم الجديد
-                sh "sed -i 's|nourhanosama/jenkins-app:.*|nourhanosama/jenkins-app:${env.BUILD_NUMBER}|g' k8s/deployment.yaml"
+                sh "sed -i 's|nourhanosama/jenkins-app:.*|nourhanosama/jenkins-app:${env.BUILD_NUMBER}|g' argocd/deployment.yaml"
                 
                 // 2. عمل Commit و Push للتغييرات
                 sh """
