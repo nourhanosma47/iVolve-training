@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: nourhanosma47/jenkins-app:20
+        image: nourhanosama/jenkins-app:20
         ports:
         - containerPort: 80
 
