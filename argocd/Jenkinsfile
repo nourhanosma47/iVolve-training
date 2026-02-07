@@ -40,7 +40,7 @@ pipeline {
                 sh """
                     git config user.email "jenkins@example.com"
                     git config user.name "Jenkins CI"
-                    git add k8s/deployment.yaml
+                    git add argocd/deployment.yaml
                     git commit -m 'Update image tag to ${env.BUILD_NUMBER}'
                     git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/nourhanosama47/iVolve-training.git HEAD:main
                 """
