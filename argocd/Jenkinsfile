@@ -26,28 +26,28 @@ pipeline {
                 }
             }
         }
-        
         stage('Update Manifest') {
-            steps {
-                dir('argocd') {
-                    withCredentials([usernamePassword(credentialsId: 'github-token-secret', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh """
-                            # تعديل رقم الصورة في ملف الـ deployment ليطابق الصورة المرفوعة
-                            sed -i "s|image:.*|image: nourhanosma47/jenkins-app:${BUILD_NUMBER}|g" deployment.yaml
-                            
-                            # إعدادات جيت للرفع
-                            git config user.email "nourhan@example.com"
-                            git config user.name "Nourhan"
-                            
-                            git add deployment.yaml
-                            git commit -m "Update image to version ${BUILD_NUMBER} [skip ci]"
-                            
-                            # الرفع لـ GitHub عشان ArgoCD يسحب التغيير
-                            git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/nourhanosma47/iVolve-training.git main
-                        """
+    steps {
+        script {
+            // بنستخدم credentials للـ Git عشان نقدر نعمل Push للتغيير
+            withCredentials([usernamePassword(credentialsId: 'github-creds', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                
+                // 1. تغيير الـ Image Tag في ملف الـ deployment.yaml
+                // بنستخدم sed عشان ندور على اسم الصورة ونحدث الـ Tag للرقم الجديد
+                sh "sed -i 's|nourhanosama/jenkins-app:.*|nourhanosama/jenkins-app:${env.BUILD_NUMBER}|g' k8s/deployment.yaml"
+                
+                // 2. عمل Commit و Push للتغييرات
+                sh """
+                    git config user.email "jenkins@example.com"
+                    git config user.name "Jenkins CI"
+                    git add k8s/deployment.yaml
+                    git commit -m 'Update image tag to ${env.BUILD_NUMBER}'
+                    git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/nourhanosama47/iVolve-training.git HEAD:main
+                """
                     }
-                }
+                }    
             }
         }
+        
     }
 }
