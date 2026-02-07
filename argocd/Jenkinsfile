@@ -20,7 +20,7 @@ pipeline {
                     dir('argocd') { 
                         script {
                             // بناء الصورة ورفعها مباشرة برقم الـ Build الحالي
-                            sh "mvn compile jib:build -Dimage=docker.io/nourhanosma47/jenkins-app:${BUILD_NUMBER}"
+                            sh "mvn compile jib:build -Dimage=docker.io/nourhanosma47/jenkins-app:${env.BUILD_NUMBER} -Djib.to.auth.username=${DOCKER_USERNAME} -Djib.to.auth.password=${DOCKER_PASSWORD}"
                         }
                     }
                 }
