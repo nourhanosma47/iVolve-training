@@ -3,7 +3,6 @@ pipeline {
     
     tools {
         maven 'maven-3'
-        // شلنا الـ dockerTool لأنه مش هنحتاجه خلاص مع Jib
     }
 
     stages {
@@ -15,13 +14,14 @@ pipeline {
 
         stage('Build & Push Image (using Jib)') {
             steps {
-                // بننادي الـ credentials اللي فيها يوزر وباسورد Docker Hub
-                // تأكدي إن الاسم 'dockerhub-id' هو اللي إنتِ مستخدماه في Jenkins
+                // بننادي الـ credentials بتاعة Docker Hub
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-id', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                    script {
-                        // Jib هيبني الصورة ويرفعها في خطوة واحدة من غير Docker
-                        // استخدمنا ${BUILD_NUMBER} عشان الصورة تاخد رقم الـ build
-                        sh "mvn compile jib:build -Dimage=docker.io/nourhanosma47/jenkins-app:${BUILD_NUMBER}"
+                    // السطر اللي جاي ده هو اللي كان ناقص عشان يدخل الفولدر اللي فيه الكود
+                    dir('argocd') { 
+                        script {
+                            // بناء الصورة ورفعها مباشرة برقم الـ Build الحالي
+                            sh "mvn compile jib:build -Dimage=docker.io/nourhanosma47/jenkins-app:${BUILD_NUMBER}"
+                        }
                     }
                 }
             }
@@ -32,7 +32,7 @@ pipeline {
                 dir('argocd') {
                     withCredentials([usernamePassword(credentialsId: 'github-token-secret', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         sh """
-                            # تعديل رقم الصورة في ملف الـ deployment
+                            # تعديل رقم الصورة في ملف الـ deployment ليطابق الصورة المرفوعة
                             sed -i "s|image:.*|image: nourhanosma47/jenkins-app:${BUILD_NUMBER}|g" deployment.yaml
                             
                             # إعدادات جيت للرفع
@@ -42,7 +42,7 @@ pipeline {
                             git add deployment.yaml
                             git commit -m "Update image to version ${BUILD_NUMBER} [skip ci]"
                             
-                            # الرفع لـ GitHub عشان ArgoCD يشوف التغيير
+                            # الرفع لـ GitHub عشان ArgoCD يسحب التغيير
                             git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/nourhanosma47/iVolve-training.git main
                         """
                     }
