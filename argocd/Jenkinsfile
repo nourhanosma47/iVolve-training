@@ -3,45 +3,19 @@ pipeline {
     
     tools {
         maven 'maven-3'
+        // هنا بننادي الأداة اللي عرفناها في Jenkins Tools
         dockerTool 'docker' 
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // جينكينز بيعمل checkout للريبو كله في البداية
                 git branch: 'main', url: 'https://github.com/nourhanosma47/iVolve-training.git'
             }
         }
 
         stage('Build Maven') {
             steps {
-                // بما إن الـ pom.xml موجود جوه فولدر argocd
-                dir('argocd') {
-                    sh 'mvn clean package -DskipTests'
-                }
-            }
-        }
-
-        pipeline {
-    agent any
-    
-    tools {
-        maven 'maven-3'
-        dockerTool 'docker' 
-    }
-
-    stages {
-        stage('Checkout') {
-            steps {
-                // جينكينز بيعمل checkout للريبو كله في البداية
-                git branch: 'main', url: 'https://github.com/nourhanosma47/iVolve-training.git'
-            }
-        }
-
-        stage('Build Maven') {
-            steps {
-                // بما إن الـ pom.xml موجود جوه فولدر argocd
                 dir('argocd') {
                     sh 'mvn clean package -DskipTests'
                 }
@@ -51,12 +25,20 @@ pipeline {
         stage('Docker Build & Push') {
             steps {
                 dir('argocd') {
-                    
-                    sh 'docker build -t nourhanosma47/jenkins-app:${BUILD_NUMBER} .'
-                    
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-id', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-                        sh 'docker push nourhanosma47/jenkins-app:${BUILD_NUMBER}'
+                    script {
+                        // الحركة دي بتجبر جينكينز يشوف مكان الدوكر اللي نزله
+                        def dockerBin = tool name: 'docker', type: 'dockerTool'
+                        withEnv(["PATH+DOCKER=${dockerBin}/bin"]) {
+                            
+                            // بناء الصورة
+                            sh "docker build -t nourhanosma47/jenkins-app:${BUILD_NUMBER} ."
+                            
+                            // تسجيل الدخول والرفع لـ Docker Hub
+                            withCredentials([usernamePassword(credentialsId: 'dockerhub-id', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                                sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin"
+                                sh "docker push nourhanosma47/jenkins-app:${BUILD_NUMBER}"
+                            }
+                        }
                     }
                 }
             }
@@ -67,42 +49,17 @@ pipeline {
                 dir('argocd') {
                     withCredentials([usernamePassword(credentialsId: 'github-token-secret', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         sh """
-                            # تعديل رقم الـ Image في ملف الـ deployment
+                            # تعديل رقم الصورة في ملف الـ deployment
                             sed -i "s|image:.*|image: nourhanosma47/jenkins-app:${BUILD_NUMBER}|g" deployment.yaml
                             
-                            # إعدادات الجيت عشان يقدر يعمل Commit
+                            # إعدادات جيت للرفع
                             git config user.email "nourhan@example.com"
                             git config user.name "Nourhan"
                             
                             git add deployment.yaml
-                            git commit -m "Update image to version ${BUILD_NUMBER}"
+                            git commit -m "Update image to version ${BUILD_NUMBER} [skip ci]"
                             
-                            # الرفع لـ GitHub
-                            git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/nourhanosma47/iVolve-training.git main
-                        """
-                    }
-                }
-            }
-        }
-    }
-}
-        
-        stage('Update Manifest') {
-            steps {
-                dir('argocd') {
-                    withCredentials([usernamePassword(credentialsId: 'github-token-secret', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh """
-                            # تعديل رقم الـ Image في ملف الـ deployment
-                            sed -i "s|image:.*|image: nourhanosma47/jenkins-app:${BUILD_NUMBER}|g" deployment.yaml
-                            
-                            # إعدادات الجيت عشان يقدر يعمل Commit
-                            git config user.email "nourhan@example.com"
-                            git config user.name "Nourhan"
-                            
-                            git add deployment.yaml
-                            git commit -m "Update image to version ${BUILD_NUMBER}"
-                            
-                            # الرفع لـ GitHub
+                            # الرفع لـ GitHub عشان ArgoCD يشوف التغيير
                             git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/nourhanosma47/iVolve-training.git main
                         """
                     }
