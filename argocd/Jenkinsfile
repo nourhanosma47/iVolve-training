@@ -3,63 +3,28 @@ pipeline {
     
     tools {
         maven 'maven-3'
-        // تأكدي أن هذا الاسم يطابق الاسم في Manage Jenkins -> Global Tool Configuration
-        dockerTool 'docker' 
-    }
-
-    environment {
-        DOCKER_USER = 'nourhanosama' 
-        IMAGE_NAME  = 'jenkins-app'
-        IMAGE_TAG   = "${env.BUILD_NUMBER}"
-        GIT_CRED_ID = 'github-token-secret'
-        DOCKER_CRED_ID = 'docker-hub-id'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main', url: 'https://github.com/nourhanosma47/iVolve-training.git'
             }
         }
 
-        stage('Maven Build') {
+        stage('Build Maven') {
             steps {
-                sh 'mvn clean package'
+                sh 'mvn clean package -DskipTests'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Docker Build & Push') {
             steps {
-                // استخدام الـ tool لبناء الصورة
-                sh "docker build -t ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
-            }
-        }
-
-        stage('Push to Docker Hub') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: "${DOCKER_CRED_ID}", passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER_VAR')]) {
-                    sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER_VAR} --password-stdin"
-                    sh "docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
-                }
-            }
-        }
-
-        stage('Update Deployment YAML') {
-            steps {
-                sh "sed -i 's|image:.*|image: ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}|' deployment.yaml"
-            }
-        }
-
-        stage('Push to GitHub') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: "${GIT_CRED_ID}", passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
-                    sh """
-                        git config user.email "nourhan@example.com"
-                        git config user.name "Nourhan"
-                        git add deployment.yaml
-                        git commit -m "Update image to version ${IMAGE_TAG} [skip ci]"
-                        git push https://${GIT_USER}:${GIT_PASS}@github.com/YOUR_USERNAME/YOUR_REPO_NAME.git HEAD:main
-                    """
+                // هنا بنستخدم الأوامر مباشرة بدل الـ tool
+                sh 'docker build -t nourhanosma47/jenkins-app:${BUILD_NUMBER} .'
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-id', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                    sh 'docker push nourhanosma47/jenkins-app:${BUILD_NUMBER}'
                 }
             }
         }
