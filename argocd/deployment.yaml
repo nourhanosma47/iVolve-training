@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: YOUR_DOCKERHUB_USERNAME/jenkins-app:1 # جينكينز هيغير الرقم ده
+        image: nourhanosma47/jenkins-app:20
         ports:
         - containerPort: 80
 
