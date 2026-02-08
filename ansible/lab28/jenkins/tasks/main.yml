@@ -1,0 +1,21 @@
+---
+- name: Install Java (Jenkins dependency)
+  apt:
+    name: openjdk-11-jdk
+    state: present
+    update_cache: no 
+
+- name: Download Jenkins key (modern method)
+  ansible.builtin.get_url:
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+    dest: /usr/share/keyrings/jenkins-keyring.gpg
+    mode: '0644'
+
+- name: Add Jenkins repository (signed-by method)
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/jenkins-keyring.gpg] https://pkg.jenkins.io/debian-stable binary/"
+    state: present
+    update_cache: no
+
+
+

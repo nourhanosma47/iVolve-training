@@ -1,0 +1,115 @@
+# Lab 28 – Securing Sensitive Data with Ansible Vault
+
+## Objective
+
+Automate MySQL installation and configuration using Ansible while securing sensitive data using Ansible Vault.
+
+---
+
+## Tasks Implemented
+
+* Install MySQL Server on managed node
+* Create a database named `iVolve`
+* Create a MySQL user with full privileges on `iVolve` database
+* Secure database credentials using Ansible Vault
+* Validate database access using the created user
+
+---
+
+## Prerequisites
+
+* Ubuntu managed node
+* Ansible installed on control node
+* SSH access to managed node
+* `community.mysql` Ansible collection installed
+
+Install required collection:
+
+```bash
+ansible-galaxy collection install community.mysql
+```
+
+---
+
+## Project Structure
+
+```
+lab28/
+├── inventory
+├── mysql_setup.yml
+├── vault.yml
+└── README.md
+```
+
+---
+
+## Vault Variables
+
+Sensitive data is stored securely using Ansible Vault.
+
+Example variables inside `vault.yml`:
+
+```yaml
+mysql_root_password: "MyRootPass123"
+db_user: "ivolve_user"
+db_password: "Iv0lv3Pass!"
+```
+
+Encrypt the vault file:
+
+```bash
+ansible-vault encrypt vault.yml
+```
+
+---
+
+## Playbook Execution
+
+Run the playbook using:
+
+```bash
+ansible-playbook -i inventory mysql_setup.yml --ask-vault-pass --ask-become-pass
+```
+
+---
+
+## Validation Steps
+
+1. Connect to MySQL using the created user:
+
+```bash
+mysql -u ivolve_user -p
+```
+
+2. Enter the password from the vault.
+
+3. List databases:
+
+```sql
+SHOW DATABASES;
+```
+
+Expected output should include:
+
+```
+iVolve
+```
+
+4. Switch to the database:
+
+```sql
+USE iVolve;
+```
+
+If no errors appear, the configuration is successful.
+
+---
+
+## Result
+
+* MySQL installed successfully
+* `iVolve` database created
+* User created with full privileges
+* Credentials secured using Ansible Vault
+* Database access validated successfully
+

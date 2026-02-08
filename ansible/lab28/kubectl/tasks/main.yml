@@ -1,0 +1,7 @@
+---
+- name: Copy kubectl to managed node
+  copy:
+    src: /home/nourhan/iVolve-training/ansible/lab27/kubectl/kubectl
+    dest: /usr/local/bin/kubectl
+    mode: '0755'
+ 

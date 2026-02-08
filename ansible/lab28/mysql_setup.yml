@@ -1,0 +1,53 @@
+---
+- name: Install and configure MySQL
+  hosts: managed
+  become: yes
+
+  vars_files:
+    - vault.yml
+
+  tasks:
+
+    - name: Install MySQL server
+      apt:
+        name: mysql-server
+        state: present
+        update_cache: yes
+
+    - name: Install PyMySQL (required for Ansible MySQL modules)
+      apt:
+        name: python3-pymysql
+        state: present
+
+    - name: Ensure MySQL is running
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+
+    - name: Create iVolve database
+      community.mysql.mysql_db:
+        name: iVolve
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    - name: Create database user
+      community.mysql.mysql_user:
+        name: "{{ mysql_user }}"
+        password: "{{ mysql_user_password }}"
+        priv: "iVolve.*:ALL"
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    - name: Verify database exists
+      community.mysql.mysql_db:
+        name: iVolve
+        state: present
+        login_user: "{{ mysql_user }}"
+        login_password: "{{ mysql_user_password }}"
+      register: mysql_check
+
+    - name: Show validation result
+      debug:
+        msg: "Database validation completed successfully."
+
